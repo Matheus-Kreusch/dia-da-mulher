@@ -46,8 +46,17 @@
             animation: float 1.5s infinite alternate;
         }
         @keyframes float {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
+            0% { transform: translateY(0); opacity: 0.8; }
+            100% { transform: translateY(-10px); opacity: 1; }
+        }
+        #surprise {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        #surprise.show {
+            opacity: 1;
+            transform: scale(1);
         }
         #surprise img {
             width: 250px;
@@ -67,14 +76,15 @@
         <img src="images.jpeg" alt="Imagem Romântica">
         <p class="msg">Parabéns! Você ganhou um vale-beijo sem data de validade!💕</p>
         <p class="hearts">❤❤❤</p>
-        <audio id="loveSong" src="luanmp3_6DTydf54.mp3"></audio>
+        <audio id="loveSong" src="luanmp3_6DTydf54.mp3" preload="auto"></audio>
     </div>
 
     <script>
         let button = document.getElementById("trickButton");
         let audio = document.getElementById("loveSong");
+        let surprise = document.getElementById("surprise");
         let attempts = 0;
-        let maxAttempts = 10; // Aumentamos para 10 tentativas
+        let maxAttempts = 10; 
 
         function centerButton() {
             let screenWidth = window.innerWidth;
@@ -90,20 +100,23 @@
         }
 
         function moveButton() {
-            if (attempts >= maxAttempts) return; // Depois de 10 tentativas, o botão para de fugir
+            if (attempts >= maxAttempts) return;
 
             let screenWidth = window.innerWidth;
             let screenHeight = window.innerHeight;
             let buttonWidth = button.offsetWidth;
             let buttonHeight = button.offsetHeight;
 
-            let newX = Math.max(10, Math.random() * (screenWidth - buttonWidth - 200)); // Fuga mais longe
-            let newY = Math.max(10, Math.random() * (screenHeight - buttonHeight - 200)); // Fuga mais longe
+            let newX = Math.random() * (screenWidth - buttonWidth - 50);
+            let newY = Math.random() * (screenHeight - buttonHeight - 50);
+
+            newX = Math.max(10, Math.min(newX, screenWidth - buttonWidth - 10));
+            newY = Math.max(10, Math.min(newY, screenHeight - buttonHeight - 10));
 
             button.style.left = newX + "px";
             button.style.top = newY + "px";
 
-            attempts++; // Contabiliza as tentativas
+            attempts++;
         }
 
         centerButton();
@@ -112,7 +125,8 @@
         button.addEventListener("touchstart", moveButton);
 
         button.addEventListener("click", function() {
-            document.getElementById("surprise").classList.remove("hidden");
+            surprise.classList.remove("hidden");
+            setTimeout(() => surprise.classList.add("show"), 10);
             button.style.display = "none";
             audio.play();
         });
