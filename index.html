@@ -64,10 +64,10 @@
     <button id="trickButton">Clique Aqui</button>
 
     <div id="surprise" class="hidden">
-        <img src="images.jpeg" alt="Imagem Romântica">
+        <img src="./images.jpeg" alt="Imagem Romântica">
         <p class="msg">Parabéns! Você ganhou um vale-beijo sem data de validade!💕</p>
         <p class="hearts">❤❤❤</p>
-        <audio id="loveSong" src="luanmp3_6DTydf54.mp3"></audio>
+        <audio id="loveSong" src="./luanmp3_6DTydf54.mp3"></audio>
     </div>
 
     <script>
@@ -109,10 +109,7 @@
         centerButton();
 
         button.addEventListener("mouseover", moveButton);
-        button.addEventListener("touchstart", function(e) {
-            e.preventDefault(); // Impede o comportamento padrão do toque
-            moveButton(); // Chama a função para mover o botão
-        });
+        button.addEventListener("touchstart", moveButton);
 
         button.addEventListener("click", function() {
             document.getElementById("surprise").classList.remove("hidden");
