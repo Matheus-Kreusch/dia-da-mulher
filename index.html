@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia Mulher ❤</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe4e1;
+            padding: 50px;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #d63384;
+        }
+        .hidden {
+            display: none;
+        }
+        .msg {
+            font-size: 22px;
+            color: #444;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #d63384;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            transition: all 0.2s ease-in-out;
+        }
+        button:hover {
+            background-color: #c2185b;
+        }
+        .hearts {
+            font-size: 40px;
+            color: red;
+            animation: float 1.5s infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        #surprise img {
+            width: 250px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Feliz Dia da Mulher!🩷</h1>
+    <p>Se acertar o botão, ganha um beijo!</p>
+
+    <button id="trickButton">Clique Aqui</button>
+
+    <div id="surprise" class="hidden">
+        <img src="images.jpeg" alt="Imagem Romântica">
+        <p class="msg">Parabéns! Você ganhou um vale-beijo sem data de validade!💕</p>
+        <p class="hearts">❤❤❤</p>
+        <audio id="loveSong" src="luanmp3_6DTydf54.mp3"></audio>
+    </div>
+
+    <script>
+        let button = document.getElementById("trickButton");
+        let audio = document.getElementById("loveSong");
+        let attempts = 0;
+        let maxAttempts = 10; // Aumentamos para 10 tentativas
+
+        function centerButton() {
+            let screenWidth = window.innerWidth;
+            let screenHeight = window.innerHeight;
+            let buttonWidth = button.offsetWidth;
+            let buttonHeight = button.offsetHeight;
+
+            let centerX = (screenWidth - buttonWidth) / 2;
+            let centerY = (screenHeight - buttonHeight) / 2;
+
+            button.style.left = centerX + "px";
+            button.style.top = centerY + "px";
+        }
+
+        function moveButton() {
+            if (attempts >= maxAttempts) return; // Depois de 10 tentativas, o botão para de fugir
+
+            let screenWidth = window.innerWidth;
+            let screenHeight = window.innerHeight;
+            let buttonWidth = button.offsetWidth;
+            let buttonHeight = button.offsetHeight;
+
+            let newX = Math.max(10, Math.random() * (screenWidth - buttonWidth - 200)); // Fuga mais longe
+            let newY = Math.max(10, Math.random() * (screenHeight - buttonHeight - 200)); // Fuga mais longe
+
+            button.style.left = newX + "px";
+            button.style.top = newY + "px";
+
+            attempts++; // Contabiliza as tentativas
+        }
+
+        centerButton();
+
+        button.addEventListener("mouseover", moveButton);
+        button.addEventListener("touchstart", moveButton);
+
+        button.addEventListener("click", function() {
+            document.getElementById("surprise").classList.remove("hidden");
+            button.style.display = "none";
+            audio.play();
+        });
+
+        window.addEventListener("resize", centerButton);
+    </script>
+
+</body>
+</html>
